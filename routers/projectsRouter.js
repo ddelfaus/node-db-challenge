@@ -44,6 +44,33 @@ router.get('/resources', (req,res)=> {
 
 
 
+router.get('/tasks', (req,res)=> {
+    Project.getTasks()
+
+
+    .then(tasks => {
+
+        const newTask =[]
+
+        tasks.forEach(e => {
+            if(e.completed === 0) {
+                e = {...e, completed:false}
+                newTask.push(e)
+            }else {
+                e = {...e, completed:true}
+            }
+        })
+
+        res.json(newTask)
+    })
+    .catch(err => {
+        res.status(500).json({ message: 'Failed to get tasks' });
+      });
+})
+
+
+
+
 
 
   module.exports = router;

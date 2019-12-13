@@ -6,7 +6,8 @@ const db = require('../data/dp-config')
 
 module.exports = {
    getProjects,
-   getResources
+   getResources,
+   getTasks
 }
 
 
@@ -19,4 +20,11 @@ function getProjects() {
 function getResources() {
     return db('resources')
     
+}
+
+function getTasks() {
+    return db('Tasks')
+    .select('projects.name','projects.description', 'Tasks.completed', 'Tasks.description', 'Tasks.notes')
+    .join('projects', 'Tasks.project_id', 'projects.id')
+
 }
