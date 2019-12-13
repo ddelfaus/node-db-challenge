@@ -68,7 +68,70 @@ router.get('/tasks', (req,res)=> {
       });
 })
 
+router.get('/taskAll', (req, res) => {
+    Project
+    
+    .getTaskAll()
+    .then(task => {
+       
+       const newTasks = []
+       
+       task.forEach(e => {
+            if(e.completed === 0){
+                e = {...e, completed: false}
+                newTasks.push(e)
+            } else {
+                e = {...e, completed: true}
+                newTasks.push(e)
+            }
+        })
+      res.json(newTasks)
+    })
+    .catch(err => {
+      res.status(500).json({ message: 'Failed to get project' });
+    });
+  });
 
+
+router.post('/', (req, res) => {
+    const projectData = req.body;
+  
+    Project.addProject(projectData)
+    .then(project => {
+      res.status(201).json(project);
+    })
+    .catch (err => {
+      res.status(500).json({ message: 'Failed to create new project' });
+    });
+  });
+
+
+
+  router.post('/resources', (req, res) => {
+    const resourceData = req.body;
+  
+    Project.addResource(resourceData)
+    .then(resource => {
+      res.status(201).json(resource);
+    })
+    .catch (err => {
+      res.status(500).json({ message: 'Failed to create new resource' });
+    });
+  });
+
+
+
+  router.post('/task', (req, res) => {
+    const taskData = req.body;
+    const id = req.params.id;
+    Project.addTask(taskData, id)
+    .then(task => {
+      res.status(201).json(task);
+    })
+    .catch (err => {
+      res.status(500).json({ message: 'Failed to create new task' });
+    });
+  });
 
 
 

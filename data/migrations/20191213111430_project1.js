@@ -11,7 +11,7 @@ exports.up = function(knex) {
 
       tbl.string("description", 255)
     
-      tbl.bool('completed')
+      tbl.bool('completed', false)
   })
 
   .createTable("resources", tbl => {
@@ -53,7 +53,7 @@ exports.up = function(knex) {
     
       tbl.string("notes", 255)
 
-      tbl.bool('completed')
+      tbl.bool('completed', false)
 
               
       tbl.integer("project_id")
